@@ -1,0 +1,18 @@
+<div class="schema_info">
+<div style="float: left; width: 50%; margin-bottom: 20px; padding-right: 20px;">
+<h1>Schema for '<?php echo strtolower(TemplateVars::get('table')); ?>'</h1>
+<div>
+<?php TemplateVars::get('schema')->dump(); ?>
+</div>
+</div>
+<div style="float: left; width: 45%; clear: right; border-left: 1px #ccc solid;  padding-left: 30px; margin-bottom: 20px;">
+<h1 style="border-bottom: 1px #ccc solid; padding-bottom: 15px;">SQL for '<?php echo strtolower(TemplateVars::get('table')); ?>'</h1>
+<pre><?php TemplateVars::display('schema_sql'); ?></pre>
+</div>
+
+<hr style="clear:both; margin-top: 20px;"/>
+<div class="table_data">
+<h2>Example Data:</h2>
+<?php echo TemplateVars::get('table_data')->dump(); ?>
+</div>
+<hr style="clear:both; margin-top: 20px;"/>

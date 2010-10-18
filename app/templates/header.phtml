@@ -1,0 +1,132 @@
+<html>
+<head>
+	<title>mescal | db browser</title>
+	<script src=" http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+	<style type="text/css">
+	<!--
+	
+	body {
+		font-family: "Lucida Grande", sans-serif;
+		font-size: 12px;
+		line-height: 150%;
+	}
+	
+	.schema_info {
+		padding: 15px;
+	}
+	
+	table {
+		background-color: #eee;
+		border-collapse: collapse;
+	}
+	
+	table td, table th {
+		padding: 5px;
+		border: 1px #ccc solid;
+		font-size: 10px;
+	}
+	.table_data {
+		padding: 10px;
+	}
+	
+	h1, h2 {
+		font-family: Helvetica, sans-serif;
+		font-weight: normal;
+	}
+	
+	.list_menu {
+		width: 60%;
+		background-color: #fff;
+		overflow: auto;
+	}
+	
+	.list_menu td {
+		padding: 5px;
+		border: 0;
+		border-right: 1px #ccc solid;
+		padding-right: 5px;
+		padding-left: 5px;
+	}
+	.list_menu ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	
+	.list_menu li {
+		margin-bottom: 6px;
+	}
+	
+	hr {
+		border: 0;
+		border-bottom: 1px #ccc solid;
+	}
+	
+	a.active_menu {
+		font-weight: bold;
+		color: #000;
+		text-decoration: none;
+	}
+	
+	#table_menu_display{
+		width: 100%;
+		overflow: auto;
+	}
+	
+	-->
+	</style>
+</head>
+<body>
+
+<script type="text/javascript">
+<!--
+	
+function hijack_menu_links()
+{
+	var current_db = $('select').val();
+	
+	$('#table_menu_display a').click(function(){
+		var table = $(this).html();
+		document.location = '?table='+table+'&db='+current_db;
+		return false;
+	});
+}
+
+$(document).ready(function(){
+	// Pick up on select change.
+	hijack_menu_links();
+	
+	$('#search_tables').keydown(function(){
+		var search = $(this).val();
+		$('.list_menu a').show().each(function(idx, a){
+			if (search == '') {
+				return;
+			}
+		   var pos = $(a).html().indexOf(search);
+			if (pos == -1) {
+				$(a).hide();
+			}
+		});
+	});
+	
+	$('select').change(function(){
+		var current_db = $(this).val();
+		
+		$('#container').fadeOut();
+		$('#table_menu_display').fadeOut(300).delay(300).load("ajax.php?action=show_menu&db="+current_db, function(){
+				hijack_menu_links();
+			}).fadeIn();
+	});
+	
+	
+});
+-->
+</script>
+
+Database: <select>
+<?php foreach(TemplateVars::get('dbs') as $db): ?>
+<option <?php if ($db == TemplateVars::get('active_db')) echo ' selected="selected"'; ?>><?php echo($db); ?></a></option>
+<?php endforeach; ?>
+</select> &nbsp; Search tables: <input type="text" id="search_tables" value=""/>
+<img src="./app/assets/mescal.gif" width="61" height="18" style="float: right; clear: right"/>
+<hr/>
